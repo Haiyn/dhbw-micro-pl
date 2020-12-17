@@ -1,9 +1,7 @@
 bases:
-#- build/openshift
 - deploy/k8s
-- deploy/openshift
 
 images:
-- name: replace/me/event-bus
-  newName: quay.io/wrichter/dhbw-exercise-1-event-bus
-  newTag: main
+- name: replace/me/receivedata
+  newName: haiyn/dhbw-micro-receivedata
+  newTag: latest

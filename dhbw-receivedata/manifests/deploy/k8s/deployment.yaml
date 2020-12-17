@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"dhbw-receivedata:latest","namespace":"dhbw-micro"},"fieldPath":"spec.template.spec.containers[?(@.name==\"dhbw-receivedata\")].image","pause":"false"}]'
-    app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"Deployment","name":"dhbw-eventbus"}]'
   labels:
     app: dhbw-receivedata
     app.kubernetes.io/component: dhbw-receivedata
@@ -11,39 +8,30 @@ metadata:
     app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-receivedata
 spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
+  # Create 5 pods to load balance by the service
+  replicas: 3
   selector:
     matchLabels:
-      app: dhbw-receivedata
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+      app.kubernetes.io/name: dhbw-receivedata
   template:
     metadata:
       labels:
-        app: dhbw-receivedata
-        deploymentconfig: dhbw-receivedata
+        app.kubernetes.io/name: dhbw-receivedata
     spec:
       containers:
-        - image: replace/me/dhbw-receivedata:latest
-          imagePullPolicy: Always
+        - image: replace/me/receivedata
           name: dhbw-receivedata
           ports:
             - containerPort: 4001
               protocol: TCP
           resources:
             # limit to 128 MB and 1 core
+            # not *technically* 128MB but 128 Mebibyte, but close enough...
             limits:
-              memory: "128MB"
+              memory: "128Mi"
               cpu: "1"
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
+          env:
+            - name: RECEIVEDATA_HOST
+              value: "dhbw-receivedata"
+            - name: EVENTBUS_PORT
+              value: "4001"

@@ -1,0 +1,7 @@
+bases:
+- deploy/k8s
+
+images:
+- name: replace/me/mongodb
+  newName: mongo
+  newTag: latest

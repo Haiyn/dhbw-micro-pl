@@ -1,9 +1,8 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: demo
+  name: dhbw-receivedata
 spec:
   containers:
-  - name: testpod
-    image: alpine:3.5
-    command: ["ping", "8.8.8.8"]
+  - name: dhbw-receivedata
+    image: dhbw-receivedata:latest

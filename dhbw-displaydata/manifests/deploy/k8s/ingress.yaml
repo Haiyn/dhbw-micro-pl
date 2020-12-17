@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: event-bus
+  name: dhbw-displaydata
 spec:
   rules:
-    - host: event-bus-wrichter-dhbw-exercise-1.apps.osd-evalcluster.v0z2.p1.openshiftapps.com
+    - host: dhbw-micro.info
       http:
         paths:
-          - path: /
+          - path: /eventbus
             pathType: Prefix
             backend:
-              serviceName: event-bus
-              servicePort: 4005
+              serviceName: dhbw-displaydata
+              servicePort: 3000

@@ -1,14 +1,14 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: dhbw-eventbus
+  name: dhbw-mongodb
 spec:
   rules:
     - host: dhbw-micro.info
       http:
         paths:
-          - path: /eventbus
+          - path: /mongodb
             pathType: Prefix
             backend:
-              serviceName: dhbw-eventbus
-              servicePort: 4000
+              serviceName: dhbw-mongodb
+              servicePort: 27017
