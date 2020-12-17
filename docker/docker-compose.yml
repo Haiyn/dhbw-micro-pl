@@ -1,0 +1,51 @@
+version: '3'
+services:
+  dhbw-displaydata:
+    build: ../dhbw-displaydata
+    env_file:
+      - .env
+    ports:
+      - "${DISPLAYDATA_PORT}:${DISPLAYDATA_PORT}"
+    image: dhbw-displaydata
+    depends_on:
+      - dhbw-mongo
+    networks:
+      development:
+  dhbw-eventbus:
+    build: ../dhbw-eventbus
+    env_file:
+      - .env
+    ports:
+      - "${EVENTBUS_PORT}:${EVENTBUS_PORT}"
+    image: dhbw-eventbus
+    networks:
+      development:
+  dhbw-receivedata:
+    build: ../dhbw-receivedata
+    env_file:
+      - .env
+    ports:
+      - "${RECEIVEDATA_PORT}:${RECEIVEDATA_PORT}"
+    image: dhbw-receivedata
+    networks:
+      development:
+  dhbw-mongo:
+    image: "mongo"
+    env_file:
+      - .env
+    ports:
+      - "${MONGO_INITDB_PORT:-27017}:${MONGO_INITDB_PORT:-27017}"
+    container_name: mongodb
+    hostname: ${MONGO_INITDB_HOST:-localhost}
+    environment:
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USER}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASS}
+      MONGO_INITDB_NAME: ${MONGO_INITDB_NAME:-co2Ampel}
+    volumes:
+      - '~/mongo/data:/data/mongodb'
+      - './mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro'
+    networks:
+      development:
+networks:
+  development:
+    driver: bridge

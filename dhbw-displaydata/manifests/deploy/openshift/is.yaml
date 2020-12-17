@@ -1,0 +1,21 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: event-bus
+    app.kubernetes.io/component: event-bus
+    app.kubernetes.io/instance: event-bus
+    app.kubernetes.io/part-of: dhbw-exercise-1
+  name: event-bus
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - from:
+      kind: DockerImage
+      name: replace/me/event-bus:latest
+    importPolicy:
+      scheduled: true
+    name: latest
+    referencePolicy:
+      type: Source

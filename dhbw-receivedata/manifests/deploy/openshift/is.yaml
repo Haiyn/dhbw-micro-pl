@@ -1,0 +1,21 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: dhbw-receivedata
+    app.kubernetes.io/component: dhbw-receivedata
+    app.kubernetes.io/instance: dhbw-receivedata
+    app.kubernetes.io/part-of: dhbw-micro
+  name: dhbw-receivedata
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - from:
+      kind: DockerImage
+      name: replace/me/dhbw-receivedata:latest
+    importPolicy:
+      scheduled: true
+    name: latest
+    referencePolicy:
+      type: Source
