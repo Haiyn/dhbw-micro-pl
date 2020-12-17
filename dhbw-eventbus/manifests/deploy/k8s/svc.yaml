@@ -3,18 +3,13 @@ kind: Service
 metadata:
   labels:
     app: dhbw-eventbus
-    app.kubernetes.io/component: dhbw-eventbus
-    app.kubernetes.io/instance: dhbw-eventbus
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-eventbus
 spec:
   ports:
-  - name: 3000-tcp
-    port: 3000
+  - name: eventbus-port
+    port: 4000
     protocol: TCP
-    targetPort: 3000
+    targetPort: 4000
   selector:
     app: dhbw-eventbus
-    deploymentconfig: dhbw-eventbus
-  sessionAffinity: None
   type: ClusterIP

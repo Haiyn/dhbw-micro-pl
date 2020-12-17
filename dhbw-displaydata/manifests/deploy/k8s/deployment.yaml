@@ -1,28 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: dhbw-displaydata
-    app.kubernetes.io/component: dhbw-displaydata
-    app.kubernetes.io/instance: dhbw-displaydata
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-displaydata
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: dhbw-displaydata
+      app: dhbw-displaydata
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dhbw-displaydata
+        app: dhbw-displaydata
     spec:
       containers:
         - image: replace/me/displaydata
           name: dhbw-displaydata
-          ports:
-            - containerPort: 3000
-              protocol: TCP
           env:
             - name: DISPLAYDATA_HOST
               value: "dhbw-displaydata"

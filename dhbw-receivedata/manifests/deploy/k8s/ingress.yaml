@@ -4,10 +4,9 @@ metadata:
   name: dhbw-receivedata
 spec:
   rules:
-    - host: dhbw-micro.info
-      http:
+    - http:
         paths:
-          - path: /receivedata
+          - path: /
             pathType: Prefix
             backend:
               serviceName: dhbw-receivedata

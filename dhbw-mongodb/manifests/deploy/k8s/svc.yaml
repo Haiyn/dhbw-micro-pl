@@ -3,18 +3,13 @@ kind: Service
 metadata:
   labels:
     app: dhbw-mongodb
-    app.kubernetes.io/component: dhbw-mongodb
-    app.kubernetes.io/instance: dhbw-mongodb
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-mongodb
 spec:
   ports:
-  - name: 27017-tcp
+  - name: mongodb-ports
     port: 27017
     protocol: TCP
     targetPort: 27017
   selector:
     app: dhbw-mongodb
-    deploymentconfig: dhbw-mongodb
-  sessionAffinity: None
   type: ClusterIP

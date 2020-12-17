@@ -3,18 +3,13 @@ kind: Service
 metadata:
   labels:
     app: dhbw-receivedata
-    app.kubernetes.io/component: dhbw-receivedata
-    app.kubernetes.io/instance: dhbw-receivedata
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-receivedata
 spec:
   ports:
-  - name: 4001-tcp
+  - name: receivedata-port
     port: 4001
     protocol: TCP
     targetPort: 4001
   selector:
     app: dhbw-receivedata
-    deploymentconfig: dhbw-receivedata
-  sessionAffinity: None
-  type: ClusterIP
+  type: NodePort

@@ -3,18 +3,13 @@ kind: Service
 metadata:
   labels:
     app: dhbw-displaydata
-    app.kubernetes.io/component: dhbw-displaydata
-    app.kubernetes.io/instance: dhbw-displaydata
-    app.kubernetes.io/part-of: dhbw-exercise-1
   name: dhbw-displaydata
 spec:
   ports:
-  - name: 3000-tcp
+  - name: displaydata-port
     port: 3000
     protocol: TCP
     targetPort: 3000
   selector:
     app: dhbw-displaydata
-    deploymentconfig: dhbw-displaydata
-  sessionAffinity: None
   type: ClusterIP

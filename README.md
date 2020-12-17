@@ -23,5 +23,10 @@ Um also zum Beispiel den MongoDB Username auf "Admin" zu setzen, kann entweder d
 ## Kubernetes Deployment
 
 Orchestration wurde mit minikube realisiert (minikube v1.13.0 on Arch 20.1.2).
+Jeder Service kann jeweils im entsprechenden `manifests`-Ordner mit kustomize gestartet werden:
+
+```
+kubectl apply -k [path_to_manifests_folder]
+```
 
 e) Imagenamen können in `docker/docker-compose.yml` angesehen und bearbeitet werden.

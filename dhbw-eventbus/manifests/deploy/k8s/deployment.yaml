@@ -1,30 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: dhbw-eventbus
-    app.kubernetes.io/component: dhbw-eventbus
-    app.kubernetes.io/instance: dhbw-eventbus
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-eventbus
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: dhbw-eventbus
+      app: dhbw-eventbus
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dhbw-eventbus
+        app: dhbw-eventbus
     spec:
       containers:
         - image: replace/me/event-bus
           name: dhbw-eventbus
-          ports:
-            - containerPort: 4000
-              protocol: TCP
           env:
             - name: EVENTBUS_HOST
               value: "dhbw-eventbus"
             - name: EVENTBUS_PORT
-              value: "3000"
+              value: "4000"

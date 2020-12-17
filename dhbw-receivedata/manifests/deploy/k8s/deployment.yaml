@@ -1,29 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: dhbw-receivedata
-    app.kubernetes.io/component: dhbw-receivedata
-    app.kubernetes.io/instance: dhbw-receivedata
-    app.kubernetes.io/part-of: dhbw-micro
   name: dhbw-receivedata
 spec:
   # Create 5 pods to load balance by the service
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: dhbw-receivedata
+      app: dhbw-receivedata
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dhbw-receivedata
+        app: dhbw-receivedata
     spec:
       containers:
         - image: replace/me/receivedata
           name: dhbw-receivedata
-          ports:
-            - containerPort: 4001
-              protocol: TCP
           resources:
             # limit to 128 MB and 1 core
             # not *technically* 128MB but 128 Mebibyte, but close enough...
@@ -33,5 +25,9 @@ spec:
           env:
             - name: RECEIVEDATA_HOST
               value: "dhbw-receivedata"
-            - name: EVENTBUS_PORT
+            - name: RECEIVEDATA_PORT
               value: "4001"
+            - name: EVENTBUS_HOST
+              value: "dhbw-eventbus"
+            - name: EVENTBUS_PORT
+              value: "4000"
