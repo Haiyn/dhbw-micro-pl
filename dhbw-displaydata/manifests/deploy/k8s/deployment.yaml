@@ -14,19 +14,28 @@ spec:
     spec:
       containers:
         - image: replace/me/displaydata
+          imagePullPolicy: Always
           name: dhbw-displaydata
           env:
             - name: DISPLAYDATA_HOST
               value: "dhbw-displaydata"
             - name: DISPLAYDATA_PORT
               value: "3000"
+            # MongoDB connection configuration
             - name: MONGO_INITDB_HOST
               value: "dhbw-mongodb"
             - name: MONGO_INITDB_PORT
               value: "27017"
-            - name: MONGO_INITDB_NAME
+            - name: MONGO_INITDB_DATABASE
               value: "co2Ampel"
-            - name: MONGO_INITDB_USER
-              value: "test"
-            - name: MONGO_INITDB_PASS
-              value: "test"
+            - name: MONGO_INITDB_USERNAME
+              value: 'test'
+            - name: MONGO_INITDB_PASSWORD
+              value: 'test'
+          # Restarts if container isn't alive (e.g. database not ready yet)
+          livenessProbe:
+            httpGet:
+              path: /data
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10

@@ -20,12 +20,12 @@ spec:
               value: "dhbw-mongodb"
             - name: MONGO_INITDB_PORT
               value: "27017"
-            - name: MONGO_INITDB_NAME
+            - name: MONGO_INITDB_DATABASE
               value: "co2Ampel"
-            - name: MONGO_INITDB_USER
-              value: "test"
-            - name: MONGO_INITDB_PASS
-              value: "test"
+            - name: MONGO_INITDB_USERNAME
+              value: 'test'
+            - name: MONGO_INITDB_PASSWORD
+              value: 'test'
           # Volume mounts for persistent store and initdb script
           volumeMounts:
             - name: mongodb-store

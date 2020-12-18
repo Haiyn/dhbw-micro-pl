@@ -29,4 +29,13 @@ Jeder Service kann jeweils im entsprechenden `manifests`-Ordner mit kustomize ge
 kubectl apply -k [path_to_manifests_folder]
 ```
 
-e) Imagenamen können in `docker/docker-compose.yml` angesehen und bearbeitet werden.
+e) Imagenamen können in `manifests/kustomization.yaml` angesehen und bearbeitet werden.
+f) Lastenverteilung wird durch die Verwendung einer Ingress-Route auf den externen Schnittstellen (Receivedata - POST, 
+GET und Displaydata - GET) sichergestellt. 
+g) Der Hostname kann in den Ingress-Dateien (`manifests/deploy/k8s/ingress.yaml`) für Receivedata und Displaydata 
+angepasst werden.
+h) Anpassungen an den Verbindungsparametern können in `dhbw-displaydata/manifests/deploy/k8s/deployment.yaml`
+vorgenommen werden. Sie müssen mit den Startparametern der MongoDB in `dhbw-mongodb/manifests/deploy/k8s/deployment.yaml`
+übereinstimmen.
+j) Siehe `dhbw-receivedata/manifests/k8s/deployment.yaml`
+k) Beachte: Startet der Displaydata-Service bevor die MongoDB initialisiert ist, funktioniert die DB-Verbindung nicht.

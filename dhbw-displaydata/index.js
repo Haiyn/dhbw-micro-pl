@@ -12,11 +12,20 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const measurements = {};
+const connectionString = buildConnectionString();
 
-// Connect to MongoDB
-mongoose.connect(buildConnectionString(), {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
-    console.log("Successfully connected to MongoDB.");
-});
+// Connect to MongoDB with a retry function incase mongodb is not ready yet
+let connect = function() {
+    mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then(() => {
+        console.log("Successfully connected to MongoDB.");
+    })
+    .catch((e) => {
+        console.log("Couldn't connect to MongoDB: " + e)
+        setTimeout(connect, 3000)
+    });
+};
+connect();
 
 // get request received - print the measurement data to console log and return it to requester
 app.get('/data',(req,res)=> {
@@ -68,15 +77,20 @@ app.listen(process.env.DISPLAYDATA_PORT, () => {
 
 function buildConnectionString() {
     let connectionString = "mongodb://";
-    if(process.env.MONGO_INITDB_USER !== '') {
-        connectionString += process.env.MONGO_INITDB_USER;
-        if(process.env.MONGO_INITDB_PASS !== '') {
-            connectionString += ':' + process.env.MONGO_INITDB_PASS;
+    if(process.env.MONGO_INITDB_USERNAME !== '') {
+        connectionString += process.env.MONGO_INITDB_USERNAME;
+        if(process.env.MONGO_INITDB_PASSWORD !== '') {
+            connectionString += ':' + process.env.MONGO_INITDB_PASSWORD;
         }
         connectionString += '@'
     }
     // we have to use the container name as a host name
-    connectionString += "dhbw-mongo:" + process.env.MONGO_INITDB_PORT + "/" + process.env.MONGO_INITDB_NAME
+    connectionString += process.env.MONGO_INITDB_HOST + ":" + process.env.MONGO_INITDB_PORT + "/" + process.env.MONGO_INITDB_DATABASE
     console.log("Built connection string: " + connectionString);
     return connectionString;
 }
+
+process.on('uncaughtException', err => {
+    console.log(`Uncaught Exception: ${err.message}`)
+    process.exit()
+});

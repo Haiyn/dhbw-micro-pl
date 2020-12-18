@@ -38,9 +38,9 @@ services:
     container_name: mongodb
     hostname: ${MONGO_INITDB_HOST:-localhost}
     environment:
-      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USER}
-      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASS}
-      MONGO_INITDB_DATABASE: ${MONGO_INITDB_NAME:-co2Ampel}
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE:-co2Ampel}
     volumes:
       - '~/mongo/data:/data/mongodb'
       - './mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro'
