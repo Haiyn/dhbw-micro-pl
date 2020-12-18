@@ -21,7 +21,7 @@ spec:
             - name: DISPLAYDATA_PORT
               value: "3000"
             - name: MONGO_INITDB_HOST
-              value: "localhost"
+              value: "dhbw-mongodb"
             - name: MONGO_INITDB_PORT
               value: "27017"
             - name: MONGO_INITDB_NAME

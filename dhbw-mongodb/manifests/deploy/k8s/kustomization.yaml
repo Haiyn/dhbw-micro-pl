@@ -1,4 +1,6 @@
 resources:
+- persistent-volume.yaml
+- persistent-volume-claim.yaml
+- configmap.yaml
 - deployment.yaml
 - svc.yaml
-- ingress.yaml

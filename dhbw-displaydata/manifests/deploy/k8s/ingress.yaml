@@ -1,4 +1,5 @@
-apiVersion: networking.k8s.io/v1beta1
+# Ingress for GET request from external
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dhbw-displaydata
@@ -7,8 +8,10 @@ spec:
     - host: dhbw-micro.info
       http:
         paths:
-          - path: /eventbus
+          - path: /data
             pathType: Prefix
             backend:
-              serviceName: dhbw-displaydata
-              servicePort: 3000
+              service:
+                name: dhbw-displaydata
+                port:
+                  number: 3000

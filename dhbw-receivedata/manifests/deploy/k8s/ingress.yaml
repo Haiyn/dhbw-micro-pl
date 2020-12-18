@@ -1,13 +1,16 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dhbw-receivedata
 spec:
   rules:
-    - http:
+    - host: dhbw-micro.info
+      http:
         paths:
-          - path: /
+          - path: /values
             pathType: Prefix
             backend:
-              serviceName: dhbw-receivedata
-              servicePort: 4001
+              service:
+                name: dhbw-receivedata
+                port:
+                  number: 4001

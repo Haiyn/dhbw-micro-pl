@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:  mongodb-init
+data:
+  # Shell to init the database
+  mongodb-init.sh: |
+    mongo -- "$MONGO_INITDB_DATABASE" <<EOF
+      var user = '$MONGO_INITDB_USER';
+      var pass = '$MONGO_INITDB_PASS';
+      if(user !== '') db.createUser({user: user, pwd: pass, roles: ["readWrite"]});
+    EOF

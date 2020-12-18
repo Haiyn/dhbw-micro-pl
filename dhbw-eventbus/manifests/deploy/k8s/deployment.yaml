@@ -20,3 +20,7 @@ spec:
               value: "dhbw-eventbus"
             - name: EVENTBUS_PORT
               value: "4000"
+            - name: DISPLAYDATA_HOST
+              value: "dhbw-displaydata"
+            - name: DISPLAYDATA_PORT
+              value: "3000"
